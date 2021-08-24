@@ -91,6 +91,22 @@ namespace advanced_vod_functions_v3
                     new Claim(ContentKeyPolicyTokenClaim.ContentKeyIdentifierClaim.ClaimType, contentKeyId)
                 };
 
+                // 2021.08.24 tokawa@microsoft.com
+                // Add maxuses for my demo purpose
+                // 
+                Claim[] maxuse = new Claim[] {
+                    new Claim("urn:microsoft:azure:mediaservices:maxuses", "2")
+                };
+
+                claims = claims.Concat(maxuse).ToArray();
+
+                // 
+
+                foreach(var cl in claims)
+                {
+                    Console.WriteLine(cl.Type + " "+ cl.Value);
+                }
+
                 JwtSecurityToken jwtToken = new JwtSecurityToken(
                     issuer: ckrestriction.Issuer,
                     audience: ckrestriction.Audience,
